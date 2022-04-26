@@ -1,76 +1,80 @@
-import { useState } from "react";
-import Swal from "sweetalert2";
-import "./App.css";
+import { useState } from 'react'
+import Swal from 'sweetalert2'
+import './App.css'
 
-const CAT_ERROR = "/cat-error.jpeg";
-const TNJ_ERROR = "/TnJ-error.png";
+const CAT_ERROR = '/cat-error.jpeg'
+const TNJ_ERROR = '/TnJ-error.png'
 
 function App() {
-  const [jsonField, setJsonField] = useState();
-  const [searchField, setSearchField] = useState();
-  const [result, setResult] = useState();
+  const [jsonField, setJsonField] = useState()
+  const [searchField, setSearchField] = useState()
+  const [result, setResult] = useState()
 
   const submit = (e) => {
-    e.preventDefault();
-    let parsed;
+    e.preventDefault()
+    let parsed
     try {
-      parsed = JSON.parse(jsonField);
+      parsed = JSON.parse(jsonField)
     } catch {
       Swal.fire({
-        text: "Invalid JSON Format",
+        text: 'Invalid JSON Format',
         imageUrl: CAT_ERROR,
         imageHeight: 300,
-        imageAlt: "Cat Error",
-      });
+        imageAlt: 'Cat Error',
+      })
     }
-    let cmd = searchField;
-    let list = cmd.split("[").join(".").split("]").join(".").split(".");
+    let cmd = searchField
+    let list = cmd.split('[').join('.').split(']').join('.').split('.')
 
     for (let i of list) {
       if (!i) {
       } else {
-        parsed = parsed[i];
+        parsed = parsed[i]
       }
     }
     if (!parsed) {
       Swal.fire({
-        text: "UNDEFINED",
+        text: 'UNDEFINED',
         imageUrl: TNJ_ERROR,
         imageHeight: 300,
-        imageAlt: "TNJ Error",
-      });
+        imageAlt: 'TNJ Error',
+      })
     }
-    setResult(JSON.stringify(parsed));
-  };
+    setResult(JSON.stringify(parsed))
+  }
 
   const info = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     Swal.fire({
-      title: "How to use? 🤔",
-      html: "Simply paste a valid json,<br>and start typing out variables",
-    });
-  };
+      title: 'How to use? 🤔',
+      html: 'Simply paste a valid json,<br>and start typing out variables',
+    })
+  }
 
   return (
-    <div className="App p-8">
+    <div className="App mx-auto p-8 md:max-w-3xl 2xl:max-w-6xl">
       <div className="flex justify-center">
-        <h1 className="text-slate-900 font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-center">
+        <h1 className="hidden text-center text-4xl font-extrabold tracking-tight text-slate-900 sm:block sm:text-5xl lg:text-6xl">
           JSON Searchable
+        </h1>
+        <h1 className="block w-full text-left text-4xl font-extrabold tracking-tight text-slate-900 sm:hidden sm:text-5xl lg:text-6xl">
+          JSON <br />
+          Searchable
         </h1>
         <input
           onClick={info}
           type="image"
           src="/information.png"
-          className="absolute right-8 w-12 h-12"
+          className="absolute right-8 h-12 w-12"
         />
       </div>
       <form onSubmit={submit}>
-        <div className="flex justify-center m-8">
-          <div className="mb-3 xl:w-4/6">
+        <div className=" justify-center sm:m-8">
+          <div className="mb-3 ">
             <div class="mb-6">
               <label
                 HtmlFor="searchField"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                class="mb-2 block py-2 text-left text-sm font-medium text-gray-900 dark:text-gray-300 sm:py-0 sm:text-center"
               >
                 Your "Query"
               </label>
@@ -78,7 +82,7 @@ function App() {
                 type="text"
                 id="searchField"
                 name="searchField"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-1"
+                class="mb-1 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                 placeholder=">"
                 onChange={(e) => setSearchField(e.target.value)}
                 required
@@ -88,7 +92,7 @@ function App() {
                 id="result"
                 name="result"
                 value={result}
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                 placeholder="Result"
                 required
                 disabled
@@ -98,20 +102,20 @@ function App() {
             <textarea
               className="
               form-control
+              m-0
               block
               w-full
-              px-3
-              py-1.5
-              text-base
+              rounded
+              border
+              border-solid
+              border-gray-300
+              bg-white bg-clip-padding
+              px-3 py-1.5 text-base
               font-normal
               text-gray-700
-              bg-white bg-clip-padding
-              border border-solid border-gray-300
-              rounded
               transition
               ease-in-out
-              m-0
-              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+              focus:border-blue-600 focus:bg-white focus:text-gray-700 focus:outline-none
             "
               id="jsonField"
               name="jsonField"
@@ -121,16 +125,16 @@ function App() {
               onChange={(e) => setJsonField(e.target.value)}
             ></textarea>
           </div>
+            <button
+              type="submit"
+              className="mt-2 w-full rounded-lg bg-blue-700 px-5 py-3 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Submit
+            </button>
         </div>
-        <button
-          type="submit"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          Submit
-        </button>
       </form>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
